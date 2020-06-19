@@ -1,0 +1,95 @@
+services:
+  - type: web
+    name: posthog
+    env: docker
+    dockerfilePath: ./server/Dockerfile
+    dockerContext: ./server
+    envVars:
+      - key: IS_BEHIND_PROXY
+        value: 1
+      - key: POSTHOG_REDIS_HOST
+        fromService:
+          name: posthog-redis
+          type: pserv
+          property: host
+      - key: POSTHOG_REDIS_PORT
+        value: "10000"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: posthog
+          property: connectionString
+
+  - type: worker
+    name: posthog-worker
+    env: docker
+    dockerfilePath: ./worker/Dockerfile
+    dockerContext: ./worker
+    numInstances: 1
+    envVars:
+      - key: POSTHOG_REDIS_HOST
+        fromService:
+          name: posthog-redis
+          type: pserv
+          property: host
+      - key: POSTHOG_REDIS_PORT
+        value: "10000"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: posthog
+          property: connectionString
+
+  # Don't scale the provided background worker to many instances,
+  # it also runs Celery beat scheduler which cannot be multiplied.
+  # Use two separate background workers instead for this use case,
+  # like this:
+
+#  - type: worker-beat
+#    name: posthog-worker-beat
+#    env: docker
+#    dockerfilePath: ./worker-beat/Dockerfile
+#    dockerContext: ./worker-beat
+#    numInstances: 1
+#    envVars:
+#      - key: POSTHOG_REDIS_HOST
+#        fromService:
+#          name: posthog-redis
+#          type: pserv
+#          property: host
+#      - key: POSTHOG_REDIS_PORT
+#        value: "10000"
+#      - key: DATABASE_URL
+#        fromDatabase:
+#          name: posthog
+#          property: connectionString
+#
+#  - type: worker-celery
+#    name: posthog-worker-celery
+#    env: docker
+#    dockerfilePath: ./worker-celery/Dockerfile
+#    dockerContext: ./worker-celery
+#    envVars:
+#      - key: POSTHOG_REDIS_HOST
+#        fromService:
+#          name: posthog-redis
+#          type: pserv
+#          property: host
+#      - key: POSTHOG_REDIS_PORT
+#        value: "10000"
+#      - key: DATABASE_URL
+#        fromDatabase:
+#          name: posthog
+#          property: connectionString
+
+  - type: pserv
+    name: posthog-redis
+    env: docker
+    repo: https://github.com/render-examples/redis.git
+    disk:
+      name: data
+      mountPath: /var/lib/redis
+      sizeGB: 10
+
+databases:
+  - name: posthog
+    databaseName: posthog
+    user: posthog
