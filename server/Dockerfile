@@ -1,6 +1,6 @@
 FROM posthog/posthog
 
-COPY migrate-and-server.sh ./bin/
+COPY migrate-and-serve.sh ./bin/
 
 EXPOSE 80
-CMD ["./bin/migrate-and-server.sh"]
+CMD ["./bin/migrate-and-serve.sh"]
