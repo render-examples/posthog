@@ -2,7 +2,7 @@ databases:
 - name: posthog
   databaseName: posthog
   user: posthog
-  plan: standard
+  plan: standard # posthog can quickly use up hundreds of MBs of disk space
   
 services:
 - type: web
