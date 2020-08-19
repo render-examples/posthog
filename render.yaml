@@ -2,7 +2,8 @@ databases:
 - name: posthog
   databaseName: posthog
   user: posthog
-
+  plan: standard
+  
 services:
 - type: web
   name: posthog
