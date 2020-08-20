@@ -14,6 +14,8 @@ services:
   envVars:
   - key: IS_BEHIND_PROXY
     value: 1
+  - key: PORT
+    value: 80
   - key: POSTHOG_REDIS_HOST
     fromService:
       name: posthog-redis
