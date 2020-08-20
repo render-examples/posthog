@@ -1,6 +1,5 @@
-FROM posthog/posthog
+FROM posthog/posthog:latest
 
 COPY migrate-and-serve.sh ./bin/
 
-EXPOSE 80
 CMD ["./bin/migrate-and-serve.sh"]
