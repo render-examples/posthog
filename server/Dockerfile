@@ -1,5 +1,15 @@
 FROM posthog/posthog:latest
 
-COPY migrate-and-serve.sh ./bin/
+ARG DATABASE_URL
+ARG POSTHOG_REDIS_HOST
+ARG POSTHOT_REDIS_PORT
+ARG SECRET_KEY
 
-CMD ["./bin/migrate-and-serve.sh"]
+ENV DATABASE_URL=$DATABASE_URL
+ENV POSTHOG_REDIS_HOST=$POSTHOG_REDIS_HOST
+ENV POSTHOG_REDIS_PORT=$POSTHOG_REDIS_PORT
+ENV SECRET_KEY=$SECRET_KEY
+
+RUN ./bin/docker-migrate
+
+CMD ["./bin/docker-server"]
