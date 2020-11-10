@@ -16,8 +16,6 @@ services:
     value: 1
   - key: IS_DOCKER
     value: true
-  - key: PORT
-    value: 10000
   - key: POSTHOG_REDIS_HOST
     fromService:
       name: posthog-redis
