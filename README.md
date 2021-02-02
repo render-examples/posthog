@@ -2,9 +2,12 @@
 
 This repo can be used to deploy [PostHog] on Render.
 
-- It uses the [official PostHog Docker image](https://hub.docker.com/r/posthog/posthog) and creates a Render Web Service and [Background Worker](https://render.com/docs/background-workers).
-- [Render Databases](https://render.com/docs/databases) are used to spin up a fully managed PostgreSQL instance.
-- It uses [Redis](https://render.com/docs/deploy-redis) for asynchronous jobs.
+- Uses the [official PostHog Docker image](https://hub.docker.com/r/posthog/posthog) to create a Render Web Service
+- Creates two [Background Workers](https://render.com/docs/background-workers):
+    1. Celery for running background tasks
+    2. PostHog Plugin Server
+- Creates a [Render PostgreSQL Managed Database](https://render.com/docs/databases)
+- Creates a [Redis](https://render.com/docs/deploy-redis) instance for caching and asynchronous jobs
 
 ## Deployment
 
