@@ -2,7 +2,7 @@ databases:
 - name: posthog
   databaseName: posthog
   user: posthog
-  plan: standard # PostHog can quickly use up hundreds of MBs of disk space, depending on volume of analytics
+  plan: standard # PostHog can quickly use up hundreds of MBs of disk space, depending on the volume of analytics
 
 services:
 - type: web
