@@ -2,7 +2,7 @@ databases:
 - name: posthog
   databaseName: posthog
   user: posthog
-  plan: standard # posthog can quickly use up hundreds of MBs of disk space
+  plan: standard # PostHog can quickly use up hundreds of MBs of disk space, depending on volume of analytics
 
 services:
 - type: web
@@ -69,3 +69,26 @@ services:
     value: true
   - key: SECRET_KEY
     generateValue: true
+
+- type: worker
+  name: posthog-plugin-server
+  env: docker
+  dockerfilePath: ./plugin-server/Dockerfile
+  dockerContext: ./plugin-server
+  numInstances: 1
+  autoDeploy: false
+  envVars:
+  - key: POSTHOG_REDIS_HOST
+    fromService:
+      name: posthog-redis
+      type: pserv
+      property: host
+  - key: POSTHOG_REDIS_PORT
+    fromService:
+      name: posthog-redis
+      type: pserv
+      property: port
+  - key: DATABASE_URL
+    fromDatabase:
+      name: posthog
+      property: connectionString
