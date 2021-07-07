@@ -1,4 +1,4 @@
-FROM posthog/plugin-server:latest
+FROM posthog/plugin-server:latest-release
 
 ARG DATABASE_URL
 ARG POSTHOG_REDIS_HOST
