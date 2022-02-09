@@ -1,5 +1,6 @@
 databases:
 - name: posthog
+  region: ohio
   databaseName: posthog
   user: posthog
   plan: standard # PostHog can quickly use up hundreds of MBs of disk space, depending on the volume of analytics
@@ -7,6 +8,7 @@ databases:
 services:
 - type: web
   name: posthog
+  region: ohio
   env: docker
   dockerfilePath: ./server/Dockerfile
   dockerContext: ./server
@@ -35,6 +37,7 @@ services:
 
 - type: pserv
   name: posthog-redis
+  region: ohio
   env: docker
   autoDeploy: false
   repo: https://github.com/render-examples/redis.git
@@ -45,6 +48,7 @@ services:
 
 - type: worker
   name: posthog-worker
+  region: ohio
   env: docker
   dockerfilePath: ./worker/Dockerfile
   dockerContext: ./worker
@@ -72,6 +76,7 @@ services:
 
 - type: worker
   name: posthog-plugin-server
+  region: ohio
   env: docker
   dockerfilePath: ./plugin-server/Dockerfile
   dockerContext: ./plugin-server
