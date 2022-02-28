@@ -1,3 +1,5 @@
+***At the request of the PostHog team, we are archiving this repository. Please see [PostHog's GitHub repository](https://github.com/PostHog/posthog) for the current version of PostHog.***
+
 # Deploy PostHog on Render
 
 This repo can be used to deploy [PostHog] on Render.
